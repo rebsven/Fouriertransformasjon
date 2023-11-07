@@ -5,7 +5,7 @@ from PIL import Image
 
 
 # Leser bildet i sort/hvit
-img = cv2.imread('T.jpg', 0)
+img = cv2.imread('farao.jpg', 0)
 
 
 # Omgjør bildet til float32

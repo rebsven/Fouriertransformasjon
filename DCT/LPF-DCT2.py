@@ -12,7 +12,8 @@ bildenavn = 'T.jpg'
 
 
 def transform(img, inp):
-    img = rgb2gray(img)
+    # img = cv2.imread(img)
+    img= cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     var = inp/10
 
     replaceValue = 0
@@ -33,18 +34,18 @@ def transform(img, inp):
     mask_arr[:, -int(var*cols):] = replaceValue
     if var == 0:
         mask_arr[:, :] = not replaceValue
-    mask_img = Image.fromarray(mask_arr).convert('RGB')
+    mask_img = Image.fromarray(mask_arr).convert('L')
     mask_img.save("0_mask.jpg")
 
 
     # Normal Magnitude spectrum
-    freq_spectrum_image = Image.fromarray(dct_arr).convert('RGB')
+    freq_spectrum_image = Image.fromarray(dct_arr).convert('L')
     freq_spectrum_image.save("0_freq.jpg")
     
     masked_freq_spectrum = dct_arr
     masked_freq_spectrum[-int(var*rows):, :] = replaceValue 
     masked_freq_spectrum[:, -int(var*cols):] = replaceValue 
-    masked_freq_spectrum_image = Image.fromarray(masked_freq_spectrum).convert('RGB')
+    masked_freq_spectrum_image = Image.fromarray(masked_freq_spectrum).convert('L')
     if var == 0:
         masked_freq_spectrum_image = freq_spectrum_image
     masked_freq_spectrum_image.save("0_masked_freq.jpg")
@@ -66,6 +67,8 @@ for i in range(11):
     #     continue
 
     freq_spectrum, mask, masked_freq_spectrum, img_tr = transform(img, i)
+
+    print(type(bildenavn))
 
     plt.subplot(151)
     plt.imshow(img, cmap='gray', interpolation="none", vmin=0)
