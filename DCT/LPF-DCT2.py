@@ -8,7 +8,7 @@ warnings.filterwarnings("ignore")
 
 
 
-bildenavn = 'T.jpg'
+bildenavn = 'test.jpg'
 
 
 def transform(img, inp):

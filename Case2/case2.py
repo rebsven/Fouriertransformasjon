@@ -9,7 +9,7 @@ import warnings
 warnings.filterwarnings("ignore")
 
 #Leser inn bildet
-dark_image = imread('ChiragBilde.jpg') #Dhoni-dive_165121_730x419-m
+dark_image = imread('test2.jpg', 0) #Dhoni-dive_165121_730x419-m
 dark_image_grey = rgb2gray(dark_image)
 
 #Sjekker om input verdi er gryldig
@@ -55,7 +55,7 @@ print(f"Skaleringsfaktor: {(width/newWidth)} skal være lik {(height/newHeight)}
 
 def fourier_masker(image, i):
     f_size = 15
-    dark_image_grey_fourier = np.fft.fftshift(np.fft.fft2(rgb2gray(image)))
+    dark_image_grey_fourier = np.fft.fftshift(np.fft.fft2(image))
 
     #Reuserer foriertransformasjonen med ønsket verdi
     # Horisontal, full height
@@ -81,19 +81,22 @@ def fourier_masker(image, i):
                 pixelerIgjen += 1
     print(f"{pixelerIgjen=}")
 
+    vminV=np.min(np.array(image))
+    vmaxV=np.max(np.array(image))
+
     # Plotter ferdig bildet
     fig, ax = plt.subplots(1,4,figsize=(15,15))
-    ax[0].imshow(rgb2gray(image), cmap = 'gray', interpolation="none", vmin=0)
+    ax[0].imshow(image, cmap = 'gray', interpolation="none", vmin=vminV, vmax=vmaxV)
     ax[0].set_title('Orginalbildet', fontsize = f_size)
     ax[1].imshow(np.log(abs(fourier)), cmap='gray', interpolation="none", vmin=0)
     ax[1].set_title('Fouriertransformajon', fontsize = f_size)
     ax[2].imshow(np.log(abs(dark_image_grey_fourier)), cmap='gray', interpolation="none", vmin=0)
     ax[2].set_title('Fouriertransformasjonen\nredusert', fontsize = f_size)
-    ax[3].imshow(abs(np.fft.ifft2(dark_image_grey_fourier)), cmap='gray',  interpolation="none", vmin=0)
+    ax[3].imshow(abs(np.fft.ifft2(dark_image_grey_fourier)), cmap='gray',  interpolation="none", vmin=vminV, vmax=vmaxV)
     ax[3].set_title('Transformert bildet', fontsize = f_size)
     return plt
 
-plt = fourier_masker(dark_image, (1j)) # 0.0000000000000001
+plt = fourier_masker(dark_image_grey, 1j) # 0.0000000000000001
 plt.savefig("ut.jpg", format='jpeg', dpi=1200)
 
 

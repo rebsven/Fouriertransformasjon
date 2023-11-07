@@ -9,7 +9,7 @@ warnings.filterwarnings("ignore")
 
 def transform(img, inp):
     img = rgb2gray(img)
-    var = inp/2
+    var = inp/100
     print(var)
     replaceValue = 1
 
@@ -30,6 +30,7 @@ def transform(img, inp):
     #Definerer hvor mye av fouriertransformasjonen som skal fjernes
     height = int(img.shape[0])
     width = int(img.shape[1])
+
     newHeight = (height*var)/2
     newWidth = (width*var)/2
     newHeight = int(math.sqrt(width*height*var / (width/height)))
@@ -54,10 +55,10 @@ def transform(img, inp):
     # create a mask first, center square is 1, remaining all zeros
     mask = np.ones((rows, cols, 2), np.uint8)
     # mask[crow-int(var/2):crow+int(var/2), ccol-int(var/2):ccol+int(var/2)] = replaceValue
-    mask[-int((var/100)*rows):, :] = not replaceValue
-    mask[:int((var/100)*rows), :] = not replaceValue
-    mask[:, -int((var/100)*cols):] = not replaceValue
-    mask[:,:int((var/100)*cols)] = not replaceValue
+    mask[:int(removeHeight/2), :] = not replaceValue
+    mask[-int(removeHeight/2):, :] = not replaceValue
+    mask[:, :int(removeWidth/2)] = not replaceValue
+    mask[:,-int(removeWidth/2):] = not replaceValue
     if var == 0:
         mask[:, :] = replaceValue
 
@@ -65,10 +66,10 @@ def transform(img, inp):
     masked_magnitude_spectrum = magnitude_spectrum.copy()
     # magnitude_spectrum[crow-var:crow+var, ccol-var:ccol+var] = replaceValue
     # masked_magnitude_spectrum[crow-int(var/2):crow+int(var/2), ccol-int(var/2):ccol+int(var/2)]
-    masked_magnitude_spectrum[:int((var/100)*rows), :] = replaceValue
-    masked_magnitude_spectrum[-int((var/100)*rows):, :] = replaceValue
-    masked_magnitude_spectrum[:,:int((var/100)*cols)] = replaceValue
-    masked_magnitude_spectrum[:, -int((var/100)*cols):] = replaceValue
+    masked_magnitude_spectrum[:int(removeHeight/2), :] = replaceValue
+    masked_magnitude_spectrum[-int(removeHeight/2):, :] = replaceValue
+    masked_magnitude_spectrum[:, :int(removeWidth/2)] = replaceValue
+    masked_magnitude_spectrum[:,-int(removeWidth/2):] = replaceValue
     if var == 0:
         masked_magnitude_spectrum = magnitude_spectrum
     # apply mask and inverse DFT
@@ -87,7 +88,7 @@ def transform(img, inp):
 
     return magnitude_spectrum, mask, masked_magnitude_spectrum, img_back
 
-img = cv2.imread('Joddski.jpg')
+img = cv2.imread('test.jpg')
 # img = cv2.imread('ChiragBilde.jpg',0)
 i = int(input("Prosent: "))
 
