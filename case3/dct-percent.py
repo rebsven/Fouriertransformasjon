@@ -63,26 +63,31 @@ for i in range(11):
 
     freq_spectrum, mask, masked_freq_spectrum, img_tr = transform(img, i)
 
-    plt.subplot(151)
-    plt.imshow(img, cmap='gray', interpolation="none", vmin=0)
-    plt.title('Input image'), plt.xticks([]), plt.yticks([])
+    vminV=np.min(np.array(img))
+    vmaxV=np.max(np.array(img))
 
-    plt.subplot(152)
-    plt.imshow(freq_spectrum, cmap='gray', interpolation="none", vmin=0)
-    plt.title('Magnitude\nspectrum'), plt.xticks([]), plt.yticks([])
-
-    plt.subplot(153)
-    plt.imshow(mask, cmap='gray', interpolation="none")
-    plt.title('Mask'), plt.xticks([]), plt.yticks([])
-
-    plt.subplot(154)
-    plt.imshow(masked_freq_spectrum, cmap='gray', interpolation="none", vmin=0)
-    plt.title('Masked\nmagnitude\nspectrum'), plt.xticks([]), plt.yticks([])
-
-    plt.subplot(155)
-    plt.imshow(img_tr, cmap='gray', interpolation="none", vmin=0)
-    plt.title('Output image'), plt.xticks([]), plt.yticks([])
+    f_size = 15
+    fig, ax = plt.subplots(1,5,figsize=(f_size,f_size))
     
+    ax[0].imshow(img, cmap='gray', interpolation="none", vmin=vminV, vmax=vmaxV)
+    ax[0].set_title('Original', fontsize = f_size)
+
+    
+    ax[1].imshow(freq_spectrum, cmap='gray', interpolation="none", vmin=0)
+    ax[1].set_title('DCT', fontsize = f_size)
+
+    
+    ax[2].imshow(mask, cmap='gray', interpolation="none", vmin=0)
+    ax[2].set_title('Maske', fontsize = f_size)
+
+    
+    ax[3].imshow(masked_freq_spectrum, cmap='gray', interpolation="none", vmin=0)
+    ax[3].set_title('DCT\nredusert', fontsize = f_size)
+
+    
+    ax[4].imshow(img_tr, cmap='gray', interpolation="none", vmin=vminV, vmax=vmaxV)
+    ax[4].set_title('Komprimert\nprodukt', fontsize = f_size)
+  
     try:
         plt.savefig(f'{bildenavn.split(".")[0]}/Komprimert_{i}0_prosent.jpg', format='jpeg', dpi=1200)     
     except:
