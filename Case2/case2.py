@@ -9,7 +9,7 @@ import warnings
 warnings.filterwarnings("ignore")
 
 #Leser inn bildet
-dark_image = imread('test2.jpg', 0) #Dhoni-dive_165121_730x419-m
+dark_image = imread('ChiragBilde.jpg', 0) #Dhoni-dive_165121_730x419-m
 dark_image_grey = rgb2gray(dark_image)
 
 #Sjekker om input verdi er gryldig

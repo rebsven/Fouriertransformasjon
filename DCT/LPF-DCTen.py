@@ -11,7 +11,7 @@ warnings.filterwarnings("ignore")
 
 
 
-bildenavn = 'test.jpg'
+bildenavn = 'test2.jpg'
 
 
 def transform(img, inp):

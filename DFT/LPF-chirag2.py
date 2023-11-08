@@ -88,7 +88,7 @@ def transform(img, inp):
 
     return magnitude_spectrum, mask, masked_magnitude_spectrum, img_back
 
-img = cv2.imread('test.jpg')
+img = cv2.imread('test2.jpg')
 # img = cv2.imread('ChiragBilde.jpg',0)
 i = int(input("Prosent: "))
 
@@ -103,18 +103,16 @@ plt.imshow(magnitude_spectrum, cmap='gray', interpolation="none", vmin=0, vmax=2
 plt.title('Magnitude\nspectrum'), plt.xticks([]), plt.yticks([])
 
 plt.subplot(153)
-plt.imshow(masked_magnitude_spectrum, cmap='gray', interpolation="none", vmin=0, vmax=255)
-plt.title('Masked\nmagnitude\nspectrum'), plt.xticks([]), plt.yticks([])
-
-plt.subplot(154)
-plt.imshow(img_tr, cmap='gray', interpolation="none", vmin=0)
-plt.title('Output image'), plt.xticks([]), plt.yticks([])
-
-plt.subplot(155)
 plt.imshow(mask[:,:,0], cmap='gray', interpolation="none", vmin=0, vmax=1)
 plt.title('Mask'), plt.xticks([]), plt.yticks([])
 
+plt.subplot(154)
+plt.imshow(masked_magnitude_spectrum, cmap='gray', interpolation="none", vmin=0, vmax=255)
+plt.title('Masked\nmagnitude\nspectrum'), plt.xticks([]), plt.yticks([])
 
+plt.subplot(155)
+plt.imshow(img_tr, cmap='gray', interpolation="none", vmin=0)
+plt.title('Output image'), plt.xticks([]), plt.yticks([])
 
 
 
